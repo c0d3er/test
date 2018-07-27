@@ -1,6 +1,5 @@
 /*$Id$*/
-export default function(url, isInternal, isCsrfNeeded) {
-  isCsrfNeeded = isCsrfNeeded!=undefined ? isCsrfNeeded : true
+export default function(url) {
   var core = {
     ajax: function(method, url, args, payload, files) {
       return new Promise(function(resolve, reject) {
@@ -20,17 +19,7 @@ export default function(url, isInternal, isCsrfNeeded) {
           }
         }
         client.open(method, uri);
-        if(isCsrfNeeded){
-        client.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-        client.setRequestHeader(
-          'X-ZCSRF-TOKEN',
-          'crmcsrfparam=' + getCSRFCookie()
-        );
-        }
 
-        if (isInternal) {
-          client.setRequestHeader('AccessInternalParam', 'true');
-        }
         if (files) {
           var data = new FormData();
           /*for (var i=0, len=files.length; i < len; i++) {
